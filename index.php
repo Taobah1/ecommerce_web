@@ -4,7 +4,7 @@ include_once('functions/userfunction.php');
 include_once("includes/header.php");
  ?>
 
-<h2 class="bg-success text-center">Welcome to Taobah Store</h2>
+<h2 class="bg-warning text-center">Welcome to Taobah Store</h2>
 
 <?php
 
