@@ -10,8 +10,8 @@ include_once('includes/header.php');
         <div class="card-header">
           <h4>All Users</h4>
         </div>
-        <div class="card-body" id="product_table">
-          <table class="table table-bordered text-center" id="myTable">
+        <div class="card-body" id="users_table">
+          <table class="table table-bordered text-center" id="usersTable">
             <thead>
               <tr>
                 <th>S/N</th>
@@ -39,7 +39,7 @@ include_once('includes/header.php');
                 <td><?= $row['password'] ?></td>
                 <td><?= $row['role_as'] == '1' ? "Admin" : "User"; ?></td>
                 <td><a href="edit_user.php?id=<?= $row['id']; ?>" data-bs-target="#editModal" data-bs-toggle="modal"  class="btn btn-success editProductBtn">Edit</a></td>
-                <td><button type="button" class="btn btn-danger delete_product_btn" value="<?= $row['id']; ?>">Delete</button></td>
+                <td><button type="button" class="btn btn-danger delete_user_btn" value="<?= $row['id']; ?>">Delete</button></td>
               </tr>
               <?php
               }
@@ -69,3 +69,15 @@ include_once('includes/header.php');
 
 
 <?php include_once('includes/footer.php'); ?>
+
+<script>
+        $(document).ready( function () {
+            $('#usersTable').DataTable({
+              // "columnDefs": [
+              //       {"targets": 0},
+              //       {"targets": 3, "className": "text-center"},
+              //       {"targets": 4, "className": "text-center"}
+                // ],
+            });
+          } );  
+      </script>

@@ -11,11 +11,6 @@ $cid = $row_s['id'];
 $name = $row_s['name'];
 
  ?>
- <div class="bg-info">
-  <div class="container d-flex gap-2 text-center">
-    <a href="index.php" class="nav-link"><h6>Home <</h6></a>
-  </div>
- </div>
  <div class="container pt-5">
  <h2> Explore Our <?= $name ?></h2>
  <hr>

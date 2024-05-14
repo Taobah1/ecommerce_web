@@ -67,8 +67,8 @@ else{
   return response(400, $errorBag, false);
 }
 
-    $sql_insert = "INSERT INTO staffs (name, email, phone, password, role) 
-VALUES ('$name', '$email', '$phone', '$password', $role)";
+    $sql_insert = "INSERT INTO staffs (name, email, phone, password, role_as) 
+VALUES ('$name', '$email', '$phone', '$password', '$role')";
 
 if($conn->query($sql_insert) === true){
   $messages = [

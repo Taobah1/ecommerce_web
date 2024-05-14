@@ -1,7 +1,7 @@
 <?php 
 // session_start();
 
-include_once('functions/functions.php');
+include_once('functions/userfunction.php');
 
 include_once("includes/header.php"); 
 
@@ -23,7 +23,7 @@ if(isset($_SESSION['auth'])){
           Registration Form
         </div>
         <div class="card-body">
-          <form action="functions/staff_register.php" method="POST" id="register" class="form">
+          <form action="functions/staff_register.php" method="POST" id="staffForm" class="form">
             <div class="form-group">
               <label for="">Name</label>
               <input type="text" name="name" class="form-control" required placeholder="Enter your name">

@@ -1,5 +1,25 @@
 <?php
+session_start();
 include_once('../includes/dbconn.php');
+
+// Check if the user is logged in or registered
+// if (isset($_SESSION['user'])) {
+//     // User is logged in or registered
+//     $currentUserId = $_SESSION['user'];
+//     echo "User ID: $currentUserId";
+// } else {
+//     // User is not logged in or registered
+
+//     // Simulate registration process and get the new user ID
+//     $newUserId = getIpAddress() . rand(1111,9999); // Replace with the actual user ID from your registration process
+
+//     // Update the session with the new user ID
+//     $_SESSION['user'] = $newUserId;
+
+//     echo "User ID (after registration): $newUserId";
+// }
+
+$user_ip = $_SESSION['user'];
 
 
   $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -74,8 +94,8 @@ else{
   return response(400, $errorBag, false);
 }
 
-    $sql_insert = "INSERT INTO users (name, email, phone, password) 
-VALUES ('$name', '$email', '$phone', '$password')";
+    $sql_insert = "INSERT INTO users (user_ip, name, email, phone, password) 
+VALUES ('$user_ip', '$name', '$email', '$phone', '$password')";
 
 if($conn->query($sql_insert) === true){
   $messages = [

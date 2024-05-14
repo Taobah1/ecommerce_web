@@ -58,11 +58,11 @@ include_once('../middleware/adminmiddleware.php');
   </div>
 </div>
 
+<?php include_once('includes/footer.php'); ?>
+
 <?php
  }
  else{
   echo "<div class='alert alert-danger p-2 text-center'>Something went wrong</div>";
  }
 ?>
-
-<?php include_once('includes/footer.php'); ?>

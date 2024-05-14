@@ -42,6 +42,7 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   return response(400, $errorBag, false);
 }
 
+  else{
     $sql_update = "UPDATE staffs SET name = '$name', email = '$email', password = '$password', role_as = '$role' WHERE id = $id";
     $result = mysqli_query($conn, $sql_update);
 
@@ -59,6 +60,7 @@ if($sql_update){
     return response(401, $errorMessage, false );
   }
 
+  }
 
 function response($statusCode, $errors, $status)
 {

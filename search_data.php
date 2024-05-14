@@ -15,7 +15,7 @@ include_once("includes/header.php");
 
     ?>
 
-    <div class="col-md-4 py-2">
+    <div class="col-md-4 py-2 trending">
       <a href="view_product.php?product=<?= $rows['slug']; ?>" class="nav-link">
         <div class="card shadow">
           <div style="height:200px ">

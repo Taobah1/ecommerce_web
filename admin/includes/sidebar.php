@@ -1,4 +1,9 @@
   <?php 
+  // var_dump($_SERVER['SCRIPT_NAME']);
+  // var_dump($_SERVER['REQUEST_URI']);
+  // var_dump(strrpos($_SERVER['SCRIPT_NAME'], "/"));
+  // var_dump(substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/")+1));
+  // die();
     $active = substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/")+1);
   ?>
   

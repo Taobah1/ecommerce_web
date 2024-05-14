@@ -18,3 +18,15 @@ ul {
   margin-left: auto;
   margin-right: auto;
 }
+
+@media only screen and (max-width: 600px) {
+  .search {
+    width: 270px !important;
+    font-size: 14px !important;
+  }
+
+  .addToWhishBtn,
+  .addToCartBtn {
+    font-size: 14px;
+  }
+}

@@ -37,12 +37,6 @@
       <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
       <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-          } );  
-      </script>
-
-      <script>
         <?php
         if(isset($_SESSION['message'])){ ?>
           alertify.set('notifier','position', 'top-right');

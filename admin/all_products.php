@@ -14,7 +14,7 @@
           <h4>All Products</h4>
         </div>
         <div class="card-body" id="product_table">
-          <table class="table table-bordered text-center" id="myTable">
+          <table class="table table-bordered text-center" id="productsTable">
             <thead>
               <tr>
                 <th>ID</th>
@@ -140,9 +140,14 @@
 </div>
 
 <?php include_once('includes/footer.php'); ?>
-<!-- <script>
-  $(".delete_product_btn").click(function (e) {
-    e.preventDefault();
-    alert("hello");
-  });
-</script> -->
+<script>
+  $(document).ready( function () {
+        $('#productsTable').DataTable({
+          "columnDefs": [
+                {"targets": 0},
+                {"targets": 3, "className": "text-center"},
+                {"targets": 4, "className": "text-center"}
+            ],
+        });
+      } );  
+  </script>

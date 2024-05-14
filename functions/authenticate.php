@@ -47,7 +47,7 @@ else{
     $_SESSION['auth_user'] = [
       "id" => $userid,
       "name" => $username,
-      "email" => $useremail
+      "email" => $useremail,
     ];
 
     $_SESSION['role_as'] = $role_as;

@@ -2,6 +2,8 @@
 // session_start();
 include_once('functions/userfunction.php');
 include_once("includes/header.php");
+include_once('functions/clean_cart.php');
+include_once("user_ip.php");
  ?>
 
 <h2 class="bg-warning p-1 text-center">Welcome to Taobah Store</h2>
@@ -9,21 +11,24 @@ include_once("includes/header.php");
 <?php
 
 
-if(isset($_SESSION['message'])){
+// if(isset($_SESSION['message'])){
   ?>
-  <div class='alert alert-warning fade show alert-dismissible text-center' role='alert'><?= $_SESSION['message']; ?>
+  <!-- <div class='alert alert-warning fade show alert-dismissible text-center' role='alert'><?= $_SESSION['message']; ?>
   <button type='button' class='btn-close'data-bs-dismiss='alert' aria-label='Close'></button>
-  </div>
+  </div> -->
   <?php
-   unset($_SESSION['message']); 
-}
+  //  unset($_SESSION['message']); 
+// }
 ?>
 
 <div class="container pb-5">
   <div id="carouselControl" class="carousel slide pt-2" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="assets/img/dummy-slide-1.jpg" alt="" class="img-fluid">
+        <img src="assets/img/mintcaps1.jpg" alt="" class="img-fluid">
+      </div>
+      <div class="carousel-item active">
+        <img src="assets/img/abu_taobah.jpg" alt="" class="img-fluid">
       </div>
       <div class="carousel-item">
         <img src="assets/img/dummy-slide-2.jpg" alt="" class="img-fluid">
@@ -38,11 +43,13 @@ if(isset($_SESSION['message'])){
   </div>
 </div>
 
+
+
 <div class="container pb-5">
 <h4>Trending Products</h4>
     <hr>
   <div class="row">
-    <?php 
+    <?php
     $trending = getTrending();
     if(mysqli_num_rows($category) > 0){
       while($rows=mysqli_fetch_assoc($trending)){

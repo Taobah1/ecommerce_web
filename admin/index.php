@@ -7,7 +7,7 @@ include_once('../middleware/adminmiddleware.php');
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-4 col-md-12">
       <div class="row">
           <div class="col-lg-12 position-relative z-index-2">
             <div class="card card-plain mb-4">

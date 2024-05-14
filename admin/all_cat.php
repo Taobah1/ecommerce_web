@@ -14,7 +14,7 @@
           <h4>All Categories</h4>
         </div>
         <div class="card-body" id="category_table">
-          <table class="table table-bordered text-center" id="myTable">
+          <table class="table table-bordered text-center" id="categoriesTable">
             <thead>
               <tr>
                 <th>ID</th>
@@ -141,3 +141,15 @@
 </div>
 
 <?php include_once('includes/footer.php'); ?>
+
+<script>
+  $(document).ready( function () {
+      $('#categoriesTable').DataTable({
+        "columnDefs": [
+              {"targets": 0},
+              {"targets": 3, "className": "text-center"},
+              {"targets": 4, "className": "text-center"}
+          ],
+      });
+    } );  
+  </script>

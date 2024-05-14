@@ -36,11 +36,38 @@ function redirect($url, $message)
 
   function getCarts(){
     global $conn;
-    $user_id = $_SESSION['auth_user']['id'];
-    $query = "SELECT c.id AS cid, c.prod_qty, c.prod_id, p.id AS pid, p.name, p.image, p.selling_price FROM carts c,
-              products p WHERE c.prod_id = p.id AND c.user_id = '$user_id' ";
+    
+    if(isset($_SESSION['auth'])){
+      $user_id = $_SESSION['auth_user']['id'];
+      $query = "SELECT c.id AS cid, c.prod_qty, c.prod_id, p.id AS pid, p.name, p.image, p.selling_price, u.user_ip  FROM carts c,
+              products p, users u WHERE c.prod_id = p.id AND u.user_ip = c.user_ip AND u.id = '$user_id' ";
               $select = "SELECT * FROM carts ";
     return $result = mysqli_query($conn, $query);
+    }
+    else{
+    $user_ip = $_SESSION['user'];
+    $query = "SELECT c.id AS cid, c.prod_qty, c.prod_id, p.id AS pid, p.name, p.image, p.selling_price FROM carts c,
+              products p WHERE c.prod_id = p.id AND c.user_ip = '$user_ip' ";
+              $select = "SELECT * FROM carts ";
+    return $result = mysqli_query($conn, $query);
+    }
+  }
+
+  function getWishList(){
+    global $conn;
+    
+    if(isset($_SESSION['auth'])){
+      $user_id = $_SESSION['auth_user']['id'];
+      $query = "SELECT w.id AS wid, w.prod_id, p.id AS pid, p.name, p.image, p.selling_price, u.user_ip  FROM wish_list w,
+              products p, users u WHERE w.prod_id = p.id AND u.user_ip = w.user_ip AND u.id = '$user_id' ";
+    return $result = mysqli_query($conn, $query);
+    }
+    else{
+    $user_ip = $_SESSION['user'];
+    $query = "SELECT w.id AS wid, w.prod_id, p.id AS pid, p.name, p.image, p.selling_price FROM wish_list w,
+              products p WHERE w.prod_id = p.id AND w.user_ip = '$user_ip' ";
+    return $result = mysqli_query($conn, $query);
+    }
   }
 
   function totalCarts(){
@@ -63,12 +90,23 @@ function redirect($url, $message)
 
   function cartsItems(){
     global $conn;
-    $user_id = $_SESSION['auth_user']['id'];
-    $query = "SELECT c.prod_qty, p.selling_price FROM carts c,
-              products p WHERE c.prod_id = p.id AND c.user_id = '$user_id' ";
+    
+    if(isset($_SESSION['auth'])){
+      $user_id = $_SESSION['auth_user']['id'];
+      $query = "SELECT c.prod_qty, p.selling_price, u.user_ip FROM carts c,
+              users u, products p WHERE c.prod_id = p.id AND c.user_ip = u.user_ip AND u.id = '$user_id' ";
     $result = mysqli_query($conn, $query);
     $num_of_rows = mysqli_num_rows($result);
     echo $num_of_rows;
+    }
+    else{
+      $user_ip = $_SESSION['user'];
+    $query = "SELECT c.prod_qty, p.selling_price FROM carts c,
+              products p WHERE c.prod_id = p.id AND c.user_ip = '$user_ip' ";
+    $result = mysqli_query($conn, $query);
+    $num_of_rows = mysqli_num_rows($result);
+    echo $num_of_rows;
+    }
   }
 
   function orders(){

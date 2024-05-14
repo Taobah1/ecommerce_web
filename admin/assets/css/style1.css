@@ -11,3 +11,11 @@
 #myTable {
   text-align: center !important;
 }
+
+#usersTable th,
+#staffsTable th,
+#categoriesTable th,
+#productsTable th,
+#ordersTable th {
+  text-align: center;
+}

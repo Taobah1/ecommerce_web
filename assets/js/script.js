@@ -2,6 +2,7 @@ $(document).ready(function () {
   $(document).on("keyup", ".only_numeric", function () {
     this.value = this.value.replace(/[^0-9\.]/g, "");
   });
+  $(".refresh").load(location.href + " .refresh");
 
   $(".form").submit(function (e) {
     e.preventDefault();
@@ -18,9 +19,52 @@ $(document).ready(function () {
           type: "post",
           data: datas,
           success: function (res) {
-            alert("Registered Successfully");
+            // alert("Registered Successfully");
+            alertify.set("notifier", "position", "top-right");
+            alertify.success("Registered Successfully");
+            setTimeout(() => {
+              window.location = "login.php";
+            }, 1000);
             // $("Form")[0].reset();
-            window.location = "login.php";
+            // window.location = "login.php";
+
+            // console.log(data.message);
+            console.log(res);
+          },
+
+          error: function (xhr, status, error) {
+            console.log(xhr);
+
+            let errors = xhr.responseJSON;
+            console.log(xhr.responseJSON);
+            let errorResponse = '<div class="alert alert-danger ps-3"><ul>';
+            $.each(errors, (key, err) => {
+              errorResponse += `<li>${err}</li>`;
+              console.log(key);
+              $("#" + key + "Error")
+                .removeClass("d-none")
+                .text(err);
+            });
+            errorResponse += "</ul></div>";
+            $("#" + key + "Error").reset();
+          },
+        });
+        break;
+
+      case "staffForm":
+        $.ajax({
+          url: $(this).attr("action"),
+          type: "post",
+          data: datas,
+          success: function (res) {
+            // alert("Registered Successfully");
+            alertify.set("notifier", "position", "top-right");
+            alertify.success("Registered Successfully");
+            setTimeout(() => {
+              window.location = "staff_login.php";
+            }, 1000);
+            // $("Form")[0].reset();
+            // window.location = "login.php";
 
             // console.log(data.message);
             console.log(res);
@@ -57,6 +101,36 @@ $(document).ready(function () {
               $("#editModal").modal("hide");
               window.location.reload();
             }, 2000);
+            console.log(res);
+          },
+
+          error: function (xhr, status, error) {
+            console.log(xhr);
+
+            let errors = xhr.responseJSON;
+            console.log(xhr.responseJSON);
+            let errorResponse = '<div class="alert alert-danger ps-3"><ul>';
+            $.each(errors, (key, err) => {
+              errorResponse += `<li>${err}</li>`;
+              console.log(key);
+              $("#" + key + "Error")
+                .removeClass("d-none")
+                .text(err);
+            });
+            errorResponse += "</ul></div>";
+            $("#" + key + "Error").reset();
+          },
+        });
+        break;
+
+      case "userInfo":
+        $.ajax({
+          url: $(this).attr("action"),
+          type: "post",
+          data: datas,
+          success: function (res) {
+            alertify.set("notifier", "position", "top-right");
+            alertify.success("Updated Successfully");
             console.log(res);
           },
 
@@ -324,6 +398,78 @@ $(document).ready(function () {
     });
   });
 
+  $(document).on("click", ".delete_user_btn", function (e) {
+    e.preventDefault();
+
+    let id = $(this).val();
+
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this User!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          method: "POST",
+          url: "delete_user.php",
+          data: {
+            user_id: id,
+            delete_user_btn: true,
+          },
+          success: function (res) {
+            console.log(res);
+            if (res == 200) {
+              swal("Success!", "User deleted successfuly!", "success");
+              $("#users_table").load(location.href + " #users_table");
+            } else {
+              if (res == 400) {
+                swal("Error!", "Something went wrong!", "error");
+              }
+            }
+          },
+        });
+      }
+    });
+  });
+
+  $(document).on("click", ".delete_staff_btn", function (e) {
+    e.preventDefault();
+
+    let id = $(this).val();
+
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this staff!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          method: "POST",
+          url: "delete_staff.php",
+          data: {
+            staff_id: id,
+            delete_staff_btn: true,
+          },
+          success: function (res) {
+            console.log(res);
+            if (res == 200) {
+              swal("Success!", "Staff deleted successfuly!", "success");
+              $("#staffs_table").load(location.href + " #staffs_table");
+            } else {
+              if (res == 400) {
+                swal("Error!", "Something went wrong!", "error");
+              }
+            }
+          },
+        });
+      }
+    });
+  });
+
   $(document).on("click", ".increament-btn", function () {
     let qty = $(this).closest(".product-cart").find(".input-qty").val();
     let value = parseInt(qty, 10);
@@ -381,6 +527,40 @@ $(document).ready(function () {
     });
   });
 
+  $(document).on("click", ".addToWhishBtn", function () {
+    let pid = $(this).val();
+    let scope = "add";
+
+    $.ajax({
+      method: "POST",
+      url: "functions/wish_list.php",
+      data: {
+        pid: pid,
+        scope: scope,
+      },
+
+      success: function (res) {
+        if (res == 201) {
+          console.log(res);
+          alertify.success("Product added to Whish List");
+          $("#load_cart").load(location.href + " #load_cart");
+        } else if (res == 401) {
+          console.log(res);
+          // alert("void");
+          alertify.success("Something went wrong");
+        } else if (res == 501) {
+          console.log(res);
+          alertify.success("Something went wrong");
+          // alert("error");
+        } else if (res == 202) {
+          console.log(res);
+          alertify.success("Product already present in wish list");
+          // alert("error");
+        }
+      },
+    });
+  });
+
   $(document).on("click", ".updateQty", function () {
     let prod_qty = $(this).closest(".product-cart").find(".input-qty").val();
     let prod_id = $(this).closest(".product-cart").find(".prodId").val();
@@ -426,6 +606,38 @@ $(document).ready(function () {
           // alert("success");
           console.log(res);
           alertify.success("Product removed from cart successfully");
+          $("#load_cart").load(location.href + " #load_cart");
+          $("#cartsItem").load(location.href + " #cartsItem");
+        } else if (res == 402) {
+          console.log(res);
+          // alert("void");
+          alertify.success("Something went wrong");
+        } else if (res == 502) {
+          console.log(res);
+          alertify.success("Something went wrong");
+          // alert("error");
+        }
+      },
+    });
+  });
+
+  $(document).on("click", ".deletewishBtn", function () {
+    let wish_id = $(this).val();
+    let scope = "delete";
+
+    $.ajax({
+      method: "POST",
+      url: "functions/wish_list.php",
+      data: {
+        wish_id: wish_id,
+        scope: scope,
+      },
+      success: function (res) {
+        if (res == 202) {
+          // alert("success");
+          console.log(res);
+          alertify.success("Product removed from wish list successfully");
+          $("#load_cart").load(location.href + " #load_cart");
           $("#cartsItem").load(location.href + " #cartsItem");
         } else if (res == 402) {
           console.log(res);
@@ -452,4 +664,13 @@ $(document).ready(function () {
       },
     });
   });
+
+  // $(document).on("click", "#checkbox", function (e) {
+  //   e.preventDefault();
+  //   $("#other").removeClass("d-none");
+  // function valueChanged() {
+  //   if ($("#checkbox").is(":checked")) $("#other").show();
+  //   else $("#other").hide();
+  // }
+  // });
 });

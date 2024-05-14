@@ -1,14 +1,27 @@
 <?php 
 include_once("functions/userfunction.php");
-include_once("includes/header.php");
 include_once("check_user.php");
+include_once("includes/header.php");
  ?>
- <div class="bg-info">
+ <!-- <div class="bg-info">
   <div class="container d-flex gap-2 text-center">
-    <a href="index.php" class="nav-link"><h6>Home ></h6></a>
+    <a href="index.php" class="nav-link"><h6>Home </h6></a>
     <a href="cart.php" class="nav-link"><h6>Products</h6></a>
   </div>
- </div>
+ </div> -->
+
+ <?php
+ $viewCrt = getCarts();
+ $nor = mysqli_num_rows($viewCrt);
+ if($nor > 0){
+ $id = $_SESSION['auth_user']['id'];
+//  $user_ip = $_SESSION['user'];
+
+ $sql = "SELECT * FROM users WHERE id = $id";
+ $result = mysqli_query($conn, $sql);
+
+ $row = mysqli_fetch_assoc($result);
+ ?>
 
 <div class="container pt-5">
   <div class="card">
@@ -16,19 +29,19 @@ include_once("check_user.php");
       <form action="functions/placeorder.php" class="form" id="order" method="POST">
         <div class="row">
           <div class="col-md-7">
-            <div class="row">
-              <h4>Basic Details</h4>
+            <div class="row others">
+              <h4>Delivery Details</h4>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="" class="form-label">Name</label>
-                  <input type="text" name="name" class="form-control" required placeholder="Enter your name">
+                  <input type="text" name="name" class="form-control" required value="<?= $row['name']; ?>">
                   <div id="nameError" class="alert alert-danger mt-2 d-none"></div>
                 </div>
               </div>
               <div class="col-md-6 my-2">
                 <div class="form-group">
                   <label for="" class="form-label">Email</label>
-                  <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                  <input type="email" name="email" class="form-control" value="<?= $row['email']; ?>" required>
                   <div id="emailError" class="alert alert-danger mt-2 d-none"></div>
                   <div id="validemailError" class="alert alert-danger mt-2 d-none"></div>
                 </div>
@@ -36,25 +49,67 @@ include_once("check_user.php");
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="" class="form-label">Phone</label>
-                  <input type="text" name="phone" class="form-control only_numeric" placeholder="Enter your phone number" required>
+                  <input type="text" name="phone" class="form-control only_numeric" value="<?= $row['phone']; ?>" required>
                   <div id="phoneError" class="alert alert-danger mt-2 d-none"></div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="" class="form-label">Pin code</label>
-                  <input type="text" name="pincode" class="form-control" placeholder="Enter your pin code" required>
+                  <input type="text" name="pincode" class="form-control" placeholder="Enter your pin code">
                   <div id="pincodeError" class="alert alert-danger mt-2 d-none"></div>
                 </div>
               </div>
               <div class="col-md-12 mt-2">
                 <div class="form-group">
                   <label for="" class="form-label">Address</label>
-                  <textarea name="address" id="" cols="20" rows="5" required class="form-control"></textarea>
+                  <textarea name="address" id="" cols="20" rows="5" required class="form-control"><?= $row['address']; ?></textarea>
                   <div id="addressError" class="alert alert-danger mt-2 d-none"></div>
                 </div>
               </div>
             </div>
+            <label for="" class="form-label">Click here to ship for other</label>
+            <input type="checkbox" name="checkbox" id="checkbox" class="my-3" value="1" onchange="valueChanged()">
+            <div class="row other" id="others" style="display:none;">
+              <h4>Delivery Details</h4>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="" class="form-label">Name</label>
+                  <input type="text" name="name1" class="form-control hidden_input"  placeholder="Enter your name">
+                  <div id="name1Error" class="alert alert-danger mt-2 d-none"></div>
+                </div>
+              </div>
+              <div class="col-md-6 my-2">
+                <div class="form-group">
+                  <label for="" class="form-label">Email</label>
+                  <input type="email" name="email1" class="form-control hidden_input"  placeholder="Enter your email" >
+                  <div id="email1Error" class="alert alert-danger mt-2 d-none"></div>
+                  <div id="validemail1Error" class="alert alert-danger mt-2 d-none"></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="" class="form-label">Phone</label>
+                  <input type="text" name="phone1" class="form-control only_numeric hidden_input"  placeholder="Enter your phone" >
+                  <div id="phone1Error" class="alert alert-danger mt-2 d-none"></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="" class="form-label">Pin code</label>
+                  <input type="text" name="pincode1" class="form-control hidden_input"  placeholder="Enter your pin code" >
+                  <div id="pincode1Error" class="alert alert-danger mt-2 d-none"></div>
+                </div>
+              </div>
+              <div class="col-md-12 mt-2">
+                <div class="form-group">
+                  <label for="" class="form-label">Address</label>
+                  <textarea name="address1" id="" cols="20" rows="5"  class="form-control hidden_input"  placeholder="Enter your address"></textarea>
+                  <div id="address1Error" class="alert alert-danger mt-2 d-none"></div>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div class="col-md-5">
             <h4>Order Details</h4>
@@ -102,7 +157,7 @@ include_once("check_user.php");
                     <input type="hidden" name="totalprice" value="<?= $totalPrice ?>">
                     <input type="hidden" name="payment_id" value="">
                     <input type="hidden" name="payment_mode" value="COD">
-                    <button type="submit" name="placeorderBtn" class="btn btn-primary" id="orderNow">Order Now</button>
+                    <button type="submit" name="placeorderBtn" class="btn btn-primary" onclick="showAndFocus()" id="orderNow">Order Now</button>
                   </div>
           </div>
         </div>
@@ -110,9 +165,34 @@ include_once("check_user.php");
     </div>
   </div>
 </div>
-
+<?php
+ }else{
+  echo "<div class='alert alert-danger text-center m-5 py-5'>Please add to cart</div>";
+ }
+ ?>
 
 <?php include_once("includes/footer.php"); ?>
+<script>
+  function valueChanged() {
+    if ($("#checkbox").is(":checked")) { 
+      $(".other").show();
+      $('.hidden_input').prop('required', true);
+      }  else { 
+        $(".other").hide();
+        $('.hidden_input').prop('required', false);
+      }
+  }
+</script>
+<script>
+function showAndFocus() {
+    // Show the hidden input field
+    var hiddenInput = document.getElementByClass('hidden_input');
+    hiddenInput.style.display = 'block'; // Or any other appropriate display value
+
+    // Focus on the hidden input field
+    hiddenInput.focus();
+}
+</script>
 <!-- <script>
 $(document).ready(function (){
 

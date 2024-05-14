@@ -22,7 +22,7 @@ include_once("includes/header.php");
            $orders = getAllOrders();
            if(mysqli_num_rows($orders) > 0){
           ?>
-      <table class="table text-center table-bordered table-striped">
+      <table class="table text-center table-bordered table-striped" id="ordersTable">
         <thead>
           <tr>
             <th>ID</th>
@@ -30,6 +30,7 @@ include_once("includes/header.php");
             <th>Tracking No</th>
             <th>Price</th>
             <th>Date</th>
+            <th>Status</th>
             <th>View details</th>
           </tr>
         </thead>
@@ -43,6 +44,19 @@ include_once("includes/header.php");
             <td><?= $order['tracking_id']; ?></td>
             <td><?= $order['total_price']; ?></td>
             <td><?= $order['created_at']; ?></td>
+            <td>
+              <?php
+              if($order['status'] == 0){
+                echo "Under Processing";
+              }
+              elseif($order['status'] == 1){
+                echo "Completed";
+              }
+              else{
+                echo "Cancelled";
+              }
+              ?>
+            </td>
             <td><a href="view-order.php?tracking=<?= $order['tracking_id']; ?>" class="btn btn-primary">View Details</a></td>
             </tr>
             <?php } ?>
@@ -65,3 +79,15 @@ include_once("includes/header.php");
 </div>
 
 <?php include_once("includes/footer.php"); ?>
+
+<script>
+        $(document).ready( function () {
+            $('#ordersTable').DataTable({
+              // "columnDefs": [
+              //       {"targets": 0},
+              //       {"targets": 3, "className": "text-center"},
+              //       {"targets": 4, "className": "text-center"}
+              //   ],
+            });
+          } );  
+      </script>

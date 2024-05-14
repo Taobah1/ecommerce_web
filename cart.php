@@ -1,7 +1,7 @@
 <?php 
 include_once("functions/userfunction.php");
 include_once("includes/header.php");
-include_once("check_user.php");
+// include_once("check_user.php");
  ?>
  <div class="bg-info">
   <div class="container d-flex gap-2 text-center">
@@ -15,10 +15,13 @@ include_once("check_user.php");
     <div  id="cartsItem">
       <div class="col-md-12">
         <?php
+        if (!isset($_SESSION['cart'])) {
+          $_SESSION['cart'] = "exist"; 
+      }
         $carts = getCarts();
         $nor = mysqli_num_rows($carts);
         if($nor > 0){
-        ?>
+      ?>
         <div class="border">
           <div class="row text-center">
             <div class="col-md-2 border-end"><h4>Image</h4></div>
@@ -68,7 +71,7 @@ include_once("check_user.php");
           <?php
             }
               ?>
-               <a href="checkout.php"><button class="float-end btn btn-primary">Checkout</button></a>
+                <a href="checkout.php"><button class="float-end btn btn-primary">Checkout</button></a>
             <?php
               }  else{
               ?>

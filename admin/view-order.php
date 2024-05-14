@@ -127,13 +127,14 @@ if(isset($_GET['tracking'])){
                 <?= $order['payment_mode'] ?>
               </div>
               <hr>
-              <label for="" class="form-label m-0">Status</label>
+              <label for="" class="form-label m-0">Update Status below</label>
               <div class="">
                 <form action="update_order.php" method="POST">
-                  <select name="order_status" id="" class="form-select p-1">
-                    <option value="0" <?= $order['status'] == 0? "selected":"" ?>>Under Processing</option>
-                    <option value="1" <?= $order['status'] == 1? "selected":"" ?>>Completed</option>
-                    <option value="2" <?= $order['status'] == 2? "selected":"" ?>>Cancelled</option>
+                  <select name="order_status" id="" required class="form-select p-1">
+                    <option value="">Select Status</option>
+                    <option value="0" >Under Processing</option>
+                    <option value="1" >Completed</option>
+                    <option value="2" >Cancelled</option>
                   </select>
                   <input type="hidden" name="id" value="<?= $order['tracking_id']; ?>">
                   <button type="submit" name="update_order" class="btn btn-primary mt-2">Update</button>

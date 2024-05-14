@@ -41,14 +41,17 @@ $sell_price = $row_s['selling_price'];
           </div>
         </div>
       </div>
-      <div class="row mb-3 mt-3">
-        <div class="col-6 col-md-6">
-          <button type="button" class="btn btn-primary addToCartBtn" value="<?= $pid; ?>"><i class="fa fa-shopping-cart me-2"></i>Add to Cart</button>
+      <!-- <form action="functions/wish_list.php" method="POST"> -->
+        <div class="row mb-3 mt-3">
+          <div class="col-6 col-md-6">
+            <button type="button" class="btn btn-primary addToCartBtn" value="<?= $pid; ?>"><i class="fa fa-shopping-cart me-2"></i>Add to Cart</button>
+          </div>
+          <div class=" col-6 col-md-6">
+            <input type="hidden" name="pid" value="<?= $pid; ?>">
+            <button type="button" class="btn btn-danger addToWhishBtn" value="<?= $pid; ?>"><i class="fa fa-heart me-2"></i>Add to Whishlist</button>
+          </div>
         </div>
-        <div class=" col-6 col-md-6">
-        <button type="button" class="btn btn-danger"><i class="fa fa-heart me-2"></i>Add to Whishlist</button>
-        </div>
-      </div>
+      <!-- </form> -->
       <hr>
       <p><?= $description; ?></p>
     </div>
