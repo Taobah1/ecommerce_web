@@ -184,14 +184,14 @@ include_once("includes/header.php");
   }
 </script>
 <script>
-function showAndFocus() {
-    // Show the hidden input field
-    var hiddenInput = document.getElementByClass('hidden_input');
-    hiddenInput.style.display = 'block'; // Or any other appropriate display value
+// function showAndFocus() {
+//     // Show the hidden input field
+//     var hiddenInput = document.getElementByClass('hidden_input');
+//     hiddenInput.style.display = 'block'; // Or any other appropriate display value
 
-    // Focus on the hidden input field
-    hiddenInput.focus();
-}
+//     // Focus on the hidden input field
+//     hiddenInput.focus();
+// }
 </script>
 <!-- <script>
 $(document).ready(function (){
